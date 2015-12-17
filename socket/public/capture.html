@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title></title>
+  </head>
+  <body>
+    <h1>Helo World!!</h1>
+    <button type="button" onclick="connectToServer()">Send</button>
+    <script src="/bower_components/socket.io-client/socket.io.js"></script>
+    <script src="/bower_components/modernizer/modernizr.js"></script>
+    <script>
+
+      var allData = [
+        {value: 0.3}, {value: 0.5}, {value: 0.4}, {value: 0.6}, {value: 0.2},
+        {value: 0.7}, {value: 0.1}, {value: 0.8}, {value: 0.2}, {value: 0.4},
+        {value: 0.5}, {value: 0.9}, {value: 0.4}, {value: 0.4}, {value: 0.4},
+        {value: 0.3}, {value: 0.5}, {value: 0.4}, {value: 0.6}, {value: 0.2},
+        {value: 0.7}, {value: 0.1}, {value: 0.8}, {value: 0.2}, {value: 0.4},
+        {value: 0.4}, {value: 0.4}, {value: 0.4}, {value: 0.4}, {value: 0.4},
+        {value: 0.3}, {value: 0.5}, {value: 0.4}, {value: 0.6}, {value: 0.2},
+        {value: 0.7}, {value: 0.1}, {value: 0.8}, {value: 0.2}, {value: 0.4},
+        {value: 0.4}, {value: 0.4}, {value: 0.4}, {value: 0.4}, {value: 0.4},
+        {value: 0.3}, {value: 0.5}, {value: 0.4}, {value: 0.6}, {value: 0.2},
+        {value: 0.7}, {value: 0.1}, {value: 0.8}, {value: 0.2}, {value: 0.4},
+        {value: 0.4}, {value: 0.4}, {value: 0.4}, {value: 0.4}, {value: 0.4},
+      ]
+      var socket = io('localhost:3000/capture');
+      socket.on('connect', function() {
+        console.log('connected');
+ /*       var data = {
+          url: window.location.href,
+          value: 0.5
+        }
+        socket.emit('client-data', data );*/
+      } );
+
+      for(var i=0; i < allData.length; i++) {
+        (function(i) {
+          setTimeout(
+            function(){
+              socket.emit('sendBrainWaveData', allData[i]);
+            }, (1000 * i));
+        })(i);
+      }
+
+      function connectToServer() {
+        console.log('The send button is clicked');
+        var data = {
+          value: 0.8
+        }
+        socket.emit('sendBrainWaveData', data)
+
+      }
+    </script>
+  </body>
+</html>
