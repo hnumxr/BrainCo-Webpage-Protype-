@@ -35,14 +35,25 @@
         socket.emit('client-data', data );*/
       } );
 
-      for(var i=0; i < allData.length; i++) {
+      //var fs = require('fs');
+      //console.log('The fs is:::::');
+      //console.log(fs);
+
+      /*fs.readFile('../testFile.txt', 'utf8', function(err, data) {
+        if(err) {
+          return console.log(err);
+        }
+        console.log(data);
+      });*/
+
+      /*for(var i=0; i < allData.length; i++) {
         (function(i) {
           setTimeout(
             function(){
               socket.emit('sendBrainWaveData', allData[i]);
-            }, (1000 * i));
+            }, (500 * i));
         })(i);
-      }
+      }*/
 
       function connectToServer() {
         console.log('The send button is clicked');

@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+var fs = require('fs');
 
 var app = express();
 app.use( express.static( __dirname + '/public') );
@@ -42,6 +43,26 @@ capture.on('connection', function( socket ) {
     dashboard.emit('stats-updated', stats);
   });
 } );
+
+var fs = require('fs');
+
+
+
+for(var i=0; i < 200; i++) {
+  (function(i) {
+    setTimeout(
+      function(){
+        fs.readFile('./signalData.txt', 'utf8', function(err, data) {
+          if(err) {
+            return console.log(err);
+          }
+          var dataArr = data.split(' ');
+          stats.value = parseInt(dataArr[i]);
+          dashboard.emit('stats-updated', stats);
+        });
+      }, (500 * i));
+  })(i);
+}
 
 dashboard.on( 'connection', function( socket ) {
   console.log('The dashboard has got the connection ^^^^^^^^^^');
