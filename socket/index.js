@@ -48,19 +48,29 @@ var fs = require('fs');
 
 
 
+var i = 0;
 for(var i=0; i < 200; i++) {
+//while(1 === 1) {
   (function(i) {
     setTimeout(
       function(){
-        fs.readFile('./signalData.txt', 'utf8', function(err, data) {
+        fs.readFile('../backend/c.txt', 'utf8', function(err, data) {
           if(err) {
             return console.log(err);
           }
           var dataArr = data.split(' ');
-          stats.value = parseInt(dataArr[i]);
-          dashboard.emit('stats-updated', stats);
+          for(var j=0; j < 60; j++) {
+            (function(j) {
+              setTimeout(
+                function(){
+                    console.log(dataArr[j]);
+                    stats.value = parseInt(dataArr[j]);
+                    dashboard.emit('stats-updated', stats);
+                }, (15 * j));
+            })(j);
+          }
         });
-      }, (500 * i));
+      }, (1000 * i));
   })(i);
 }
 
