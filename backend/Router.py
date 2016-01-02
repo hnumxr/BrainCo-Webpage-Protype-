@@ -7,7 +7,8 @@ import time
 from ButterworthFilter import *
 from scipy.fftpack import fft
 
-HOST = 'localhost'
+#HOST = 'localhost'
+HOST = '192.168.1.108'
 PORT = 8899
 BUF_SIZE = 1                            # read 1 bytes from socket every time
 
@@ -17,6 +18,7 @@ OFC = -7085
 ALPHA = 0x3E8000
 V_REF = 2.5
 PGA = 64
+
 
 class Router(Thread):
     head = []                           # array buffer storing 4 bytes last received for detect whether it is head
@@ -106,8 +108,14 @@ class Router(Thread):
     def writefile(self, data):
         f = open(self.filename, 'w')
         temp_str = ''
-        for i in range(len(data)):
-            temp_str += str(data[i]) + ' '
+        for i in range(60):
+            if i % 2 == 0:
+                temp_str += str(i) + ' '
+            else:
+                temp_str += str(i * -1) + ' '
+        #for i in range(len(data)):
+        #    temp_str += str(data[i]) + ' '
+        #temp_str += str(100000000) + ' '
         f.write(temp_str)
         f.close()
 

@@ -48,8 +48,8 @@ var fs = require('fs');
 
 
 
-var i = 0;
-for(var i=0; i < 200; i++) {
+//var i = 0;
+for(var i=0; i<100; i++) {
 //while(1 === 1) {
   (function(i) {
     setTimeout(
@@ -65,17 +65,25 @@ for(var i=0; i < 200; i++) {
                 function(){
                     console.log(dataArr[j]);
                     stats.value = parseInt(dataArr[j]);
-                    dashboard.emit('stats-updated', stats);
+                  //if(i%10 === 0) {
+                    dashboard.emit('stats-updated', stats/*, function(error, message){
+                      console.log(error);
+                      console.log(message);
+                    }*/);
+                  //}
                 }, (15 * j));
             })(j);
           }
+          //stats.value = parseInt(dataArr[0]);
+          //console.log(stats.value);
+          //dashboard.emit('stats-updated', stats);
         });
       }, (1000 * i));
   })(i);
 }
 
-dashboard.on( 'connection', function( socket ) {
+/*dashboard.on( 'connection', function( socket ) {
   console.log('The dashboard has got the connection ^^^^^^^^^^');
   socket.emit( 'stats-updated', stats );
-} );
+} );*/
 
